@@ -1,0 +1,861 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Relatório Google Ads — M1 Dedetizadora</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com" />
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&display=swap" rel="stylesheet" />
+  <script src="https://cdn.jsdelivr.net/npm/chart.js@4.4.2/dist/chart.umd.min.js"></script>
+  <style>
+    *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+
+    :root {
+      --blue: #2563eb;
+      --blue-light: #eff6ff;
+      --blue-mid: #dbeafe;
+      --green: #16a34a;
+      --green-light: #f0fdf4;
+      --amber: #d97706;
+      --amber-light: #fffbeb;
+      --red: #dc2626;
+      --red-light: #fef2f2;
+      --gray-50: #f8fafc;
+      --gray-100: #f1f5f9;
+      --gray-200: #e2e8f0;
+      --gray-300: #cbd5e1;
+      --gray-500: #64748b;
+      --gray-600: #475569;
+      --gray-700: #334155;
+      --gray-900: #0f172a;
+      --white: #ffffff;
+      --shadow-sm: 0 1px 3px rgba(0,0,0,.06), 0 1px 2px rgba(0,0,0,.04);
+      --shadow: 0 4px 6px -1px rgba(0,0,0,.07), 0 2px 4px -2px rgba(0,0,0,.05);
+      --shadow-md: 0 10px 15px -3px rgba(0,0,0,.07), 0 4px 6px -4px rgba(0,0,0,.05);
+      --radius: 12px;
+      --radius-sm: 8px;
+    }
+
+    body {
+      font-family: 'Inter', system-ui, sans-serif;
+      background: var(--gray-50);
+      color: var(--gray-700);
+      min-height: 100vh;
+      font-size: 14px;
+      line-height: 1.5;
+    }
+
+    /* ── HEADER ── */
+    .header {
+      background: var(--white);
+      border-bottom: 1px solid var(--gray-200);
+      padding: 0 24px;
+      position: sticky;
+      top: 0;
+      z-index: 100;
+    }
+    .header-inner {
+      max-width: 1200px;
+      margin: 0 auto;
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      gap: 16px;
+      padding: 16px 0;
+      flex-wrap: wrap;
+    }
+    .header-brand {
+      display: flex;
+      align-items: center;
+      gap: 12px;
+    }
+    .header-logo {
+      width: 40px;
+      height: 40px;
+      background: var(--blue);
+      border-radius: 10px;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+    }
+    .header-logo svg { width: 22px; height: 22px; fill: white; }
+    .header-title { font-size: 17px; font-weight: 700; color: var(--gray-900); }
+    .header-subtitle { font-size: 12px; color: var(--gray-500); margin-top: 1px; }
+    .header-meta {
+      display: flex;
+      align-items: center;
+      gap: 24px;
+      flex-wrap: wrap;
+    }
+    .meta-item { display: flex; flex-direction: column; align-items: flex-end; }
+    .meta-label { font-size: 11px; color: var(--gray-500); font-weight: 500; text-transform: uppercase; letter-spacing: .5px; }
+    .meta-value { font-size: 13px; font-weight: 600; color: var(--gray-700); }
+    .period-badge {
+      background: var(--blue-light);
+      border: 1px solid var(--blue-mid);
+      color: var(--blue);
+      font-size: 12px;
+      font-weight: 600;
+      padding: 6px 14px;
+      border-radius: 20px;
+    }
+    .btn-export {
+      display: flex;
+      align-items: center;
+      gap: 6px;
+      background: var(--blue);
+      color: white;
+      border: none;
+      border-radius: var(--radius-sm);
+      padding: 8px 16px;
+      font-size: 13px;
+      font-weight: 600;
+      cursor: pointer;
+      transition: background .15s;
+      font-family: inherit;
+    }
+    .btn-export:hover { background: #1d4ed8; }
+    .btn-export svg { width: 15px; height: 15px; }
+
+    /* ── LAYOUT ── */
+    .main {
+      max-width: 1200px;
+      margin: 0 auto;
+      padding: 28px 24px 60px;
+      display: flex;
+      flex-direction: column;
+      gap: 28px;
+    }
+
+    /* ── SECTION TITLE ── */
+    .section-title {
+      font-size: 15px;
+      font-weight: 700;
+      color: var(--gray-900);
+      margin-bottom: 16px;
+      display: flex;
+      align-items: center;
+      gap: 8px;
+    }
+    .section-title svg { width: 18px; height: 18px; color: var(--blue); }
+
+    /* ── KPI CARDS ── */
+    .kpi-grid {
+      display: grid;
+      grid-template-columns: repeat(3, 1fr);
+      gap: 16px;
+    }
+    .kpi-card {
+      background: var(--white);
+      border-radius: var(--radius);
+      padding: 20px 22px;
+      box-shadow: var(--shadow);
+      border: 1px solid var(--gray-200);
+      display: flex;
+      flex-direction: column;
+      gap: 10px;
+      transition: box-shadow .2s;
+    }
+    .kpi-card:hover { box-shadow: var(--shadow-md); }
+    .kpi-header { display: flex; align-items: center; justify-content: space-between; }
+    .kpi-label { font-size: 12px; font-weight: 600; color: var(--gray-500); text-transform: uppercase; letter-spacing: .5px; }
+    .kpi-icon {
+      width: 34px; height: 34px; border-radius: 8px;
+      display: flex; align-items: center; justify-content: center;
+    }
+    .kpi-icon svg { width: 16px; height: 16px; }
+    .kpi-icon.blue { background: var(--blue-light); color: var(--blue); }
+    .kpi-icon.green { background: var(--green-light); color: var(--green); }
+    .kpi-icon.amber { background: var(--amber-light); color: var(--amber); }
+    .kpi-value { font-size: 26px; font-weight: 800; color: var(--gray-900); line-height: 1; }
+    .kpi-footer { font-size: 12px; color: var(--gray-500); }
+    .kpi-footer strong { color: var(--gray-700); }
+
+    /* ── CHART ── */
+    .chart-card {
+      background: var(--white);
+      border-radius: var(--radius);
+      padding: 24px;
+      box-shadow: var(--shadow);
+      border: 1px solid var(--gray-200);
+    }
+    .chart-header {
+      display: flex;
+      align-items: flex-start;
+      justify-content: space-between;
+      margin-bottom: 20px;
+      flex-wrap: wrap;
+      gap: 12px;
+    }
+    .chart-legend {
+      display: flex;
+      gap: 20px;
+      flex-wrap: wrap;
+    }
+    .legend-item {
+      display: flex;
+      align-items: center;
+      gap: 6px;
+      font-size: 12px;
+      font-weight: 500;
+      color: var(--gray-600);
+    }
+    .legend-dot {
+      width: 10px; height: 10px; border-radius: 50%;
+    }
+    .chart-wrap { position: relative; height: 280px; }
+
+    /* ── TABLE ── */
+    .table-card {
+      background: var(--white);
+      border-radius: var(--radius);
+      box-shadow: var(--shadow);
+      border: 1px solid var(--gray-200);
+      overflow: hidden;
+    }
+    .table-header {
+      padding: 20px 24px 0;
+    }
+    .table-wrap { overflow-x: auto; }
+    table {
+      width: 100%;
+      border-collapse: collapse;
+      font-size: 13px;
+    }
+    thead th {
+      background: var(--gray-50);
+      color: var(--gray-500);
+      font-size: 11px;
+      font-weight: 600;
+      text-transform: uppercase;
+      letter-spacing: .5px;
+      padding: 10px 16px;
+      text-align: left;
+      white-space: nowrap;
+      border-bottom: 1px solid var(--gray-200);
+      cursor: pointer;
+      user-select: none;
+      transition: color .15s;
+    }
+    thead th:hover { color: var(--blue); }
+    thead th .sort-icon { display: inline-block; margin-left: 4px; opacity: .4; font-size: 10px; }
+    thead th.sorted .sort-icon { opacity: 1; color: var(--blue); }
+    tbody tr {
+      border-bottom: 1px solid var(--gray-100);
+      transition: background .1s;
+    }
+    tbody tr:last-child { border-bottom: none; }
+    tbody tr:hover { background: var(--gray-50); }
+    td { padding: 12px 16px; color: var(--gray-700); vertical-align: middle; }
+    td.right { text-align: right; font-variant-numeric: tabular-nums; }
+    td.name { font-weight: 600; color: var(--gray-900); max-width: 260px; }
+    td.name span {
+      display: inline-block;
+      max-width: 100%;
+      overflow: hidden;
+      text-overflow: ellipsis;
+      white-space: nowrap;
+    }
+
+    /* Badges */
+    .badge {
+      display: inline-flex;
+      align-items: center;
+      gap: 5px;
+      font-size: 11px;
+      font-weight: 600;
+      padding: 3px 10px;
+      border-radius: 20px;
+    }
+    .badge::before { content: ''; width: 6px; height: 6px; border-radius: 50%; }
+    .badge-green { background: var(--green-light); color: var(--green); }
+    .badge-green::before { background: var(--green); }
+    .badge-amber { background: var(--amber-light); color: var(--amber); }
+    .badge-amber::before { background: var(--amber); }
+    .badge-red { background: var(--red-light); color: var(--red); }
+    .badge-red::before { background: var(--red); }
+
+    /* Progress bar for CTR */
+    .bar-wrap { display: flex; align-items: center; gap: 8px; }
+    .bar-bg { flex: 1; height: 4px; background: var(--gray-200); border-radius: 4px; min-width: 48px; }
+    .bar-fill { height: 4px; border-radius: 4px; background: var(--blue); }
+
+    /* Keywords rank */
+    .rank {
+      display: inline-flex;
+      align-items: center;
+      justify-content: center;
+      width: 22px; height: 22px;
+      background: var(--blue-light);
+      color: var(--blue);
+      font-size: 11px;
+      font-weight: 700;
+      border-radius: 6px;
+    }
+    .rank.gold { background: #fef3c7; color: #92400e; }
+    .rank.silver { background: var(--gray-100); color: var(--gray-500); }
+    .rank.bronze { background: #fff7ed; color: #9a3412; }
+
+    /* ── FOOTER ── */
+    .footer {
+      text-align: center;
+      font-size: 12px;
+      color: var(--gray-500);
+      padding: 20px 24px;
+      border-top: 1px solid var(--gray-200);
+      background: var(--white);
+      margin-top: 8px;
+    }
+
+    /* ── PRINT ── */
+    @media print {
+      .btn-export, .header { display: none !important; }
+      body { background: white; }
+      .chart-card, .kpi-card, .table-card { box-shadow: none; border: 1px solid #e2e8f0; }
+      .main { padding: 16px 0; }
+    }
+
+    /* ── RESPONSIVE ── */
+    @media (max-width: 900px) {
+      .kpi-grid { grid-template-columns: repeat(2, 1fr); }
+    }
+    @media (max-width: 600px) {
+      .kpi-grid { grid-template-columns: 1fr; }
+      .header-meta { gap: 12px; }
+      .main { padding: 20px 16px 48px; gap: 20px; }
+      .kpi-value { font-size: 22px; }
+    }
+  </style>
+</head>
+<body>
+
+<!-- ══════════════════ HEADER ══════════════════ -->
+<header class="header">
+  <div class="header-inner">
+    <div class="header-brand">
+      <div class="header-logo">
+        <img src="logo.png" alt="M1 Dedetizadora" style="width:40px;height:40px;object-fit:contain;border-radius:10px;display:block;" />
+      </div>
+      <div>
+        <div class="header-title">M1 Dedetizadora</div>
+        <div class="header-subtitle">Relatório de Performance · Google Ads</div>
+      </div>
+    </div>
+    <div class="header-meta">
+      <span class="period-badge">05/05/2026 – 15/05/2026</span>
+      <div class="meta-item">
+        <span class="meta-label">Última atualização</span>
+        <span class="meta-value">15/05/2026</span>
+      </div>
+      <button class="btn-export" onclick="window.print()">
+        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><polyline points="6 9 6 2 18 2 18 9"/><path d="M6 18H4a2 2 0 0 1-2-2v-5a2 2 0 0 1 2-2h16a2 2 0 0 1 2 2v5a2 2 0 0 1-2 2h-2"/><rect x="6" y="14" width="12" height="8"/></svg>
+        Exportar PDF
+      </button>
+    </div>
+  </div>
+</header>
+
+<!-- ══════════════════ MAIN ══════════════════ -->
+<main class="main">
+
+  <!-- KPIs -->
+  <section>
+    <div class="section-title">
+      <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><rect x="2" y="3" width="20" height="14" rx="2"/><line x1="8" y1="21" x2="16" y2="21"/><line x1="12" y1="17" x2="12" y2="21"/></svg>
+      Resumo do Período
+    </div>
+    <div class="kpi-grid">
+
+      <div class="kpi-card">
+        <div class="kpi-header">
+          <span class="kpi-label">Gasto Total</span>
+          <span class="kpi-icon green">
+            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><line x1="12" y1="1" x2="12" y2="23"/><path d="M17 5H9.5a3.5 3.5 0 0 0 0 7h5a3.5 3.5 0 0 1 0 7H6"/></svg>
+          </span>
+        </div>
+        <div class="kpi-value">R$&nbsp;118,99</div>
+        <div class="kpi-footer">Orçamento total disponível: <strong>R$ 50,00/dia</strong></div>
+      </div>
+
+      <div class="kpi-card">
+        <div class="kpi-header">
+          <span class="kpi-label">Cliques</span>
+          <span class="kpi-icon blue">
+            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M5 12h14M12 5l7 7-7 7"/></svg>
+          </span>
+        </div>
+        <div class="kpi-value">34</div>
+        <div class="kpi-footer">Média de <strong>3,1 cliques/dia</strong> no período</div>
+      </div>
+
+      <div class="kpi-card">
+        <div class="kpi-header">
+          <span class="kpi-label">Impressões</span>
+          <span class="kpi-icon blue">
+            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M1 12s4-8 11-8 11 8 11 8-4 8-11 8-11-8-11-8z"/><circle cx="12" cy="12" r="3"/></svg>
+          </span>
+        </div>
+        <div class="kpi-value">519</div>
+        <div class="kpi-footer">Anúncios exibidos em <strong>11 dias</strong></div>
+      </div>
+
+      <div class="kpi-card">
+        <div class="kpi-header">
+          <span class="kpi-label">CTR Médio</span>
+          <span class="kpi-icon amber">
+            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><polyline points="22 12 18 12 15 21 9 3 6 12 2 12"/></svg>
+          </span>
+        </div>
+        <div class="kpi-value">6,55%</div>
+        <div class="kpi-footer">Taxa de cliques sobre impressões</div>
+      </div>
+
+      <div class="kpi-card">
+        <div class="kpi-header">
+          <span class="kpi-label">CPC Médio</span>
+          <span class="kpi-icon green">
+            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><rect x="1" y="4" width="22" height="16" rx="2" ry="2"/><line x1="1" y1="10" x2="23" y2="10"/></svg>
+          </span>
+        </div>
+        <div class="kpi-value">R$&nbsp;3,50</div>
+        <div class="kpi-footer">Custo por clique médio no período</div>
+      </div>
+
+      <div class="kpi-card">
+        <div class="kpi-header">
+          <span class="kpi-label">Conversões</span>
+          <span class="kpi-icon green">
+            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><polyline points="20 6 9 17 4 12"/></svg>
+          </span>
+        </div>
+        <div class="kpi-value">14</div>
+        <div class="kpi-footer">Taxa de conv.: <strong>41,18%</strong> · Custo/conv.: <strong>R$ 8,50</strong></div>
+      </div>
+
+    </div>
+  </section>
+
+  <!-- CHART -->
+  <section>
+    <div class="chart-card">
+      <div class="chart-header">
+        <div>
+          <div class="section-title" style="margin-bottom:4px">
+            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><polyline points="22 12 18 12 15 21 9 3 6 12 2 12"/></svg>
+            Evolução Diária
+          </div>
+          <div style="font-size:12px;color:var(--gray-500)">Gasto (R$) e Cliques por dia — 05/05 a 15/05/2026</div>
+        </div>
+        <div class="chart-legend">
+          <div class="legend-item"><span class="legend-dot" style="background:#2563eb"></span>Gasto (R$)</div>
+          <div class="legend-item"><span class="legend-dot" style="background:#16a34a"></span>Cliques</div>
+        </div>
+      </div>
+      <div class="chart-wrap">
+        <canvas id="timeChart"></canvas>
+      </div>
+    </div>
+  </section>
+
+  <!-- CAMPAIGNS TABLE -->
+  <section>
+    <div class="table-card">
+      <div class="table-header">
+        <div class="section-title" style="margin-bottom:16px">
+          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><rect x="3" y="3" width="18" height="18" rx="2"/><line x1="3" y1="9" x2="21" y2="9"/><line x1="3" y1="15" x2="21" y2="15"/><line x1="9" y1="3" x2="9" y2="21"/></svg>
+          Campanhas
+        </div>
+      </div>
+      <div class="table-wrap">
+        <table id="campaignTable">
+          <thead>
+            <tr>
+              <th onclick="sortTable('campaignTable',0,this)">Campanha <span class="sort-icon">↕</span></th>
+              <th onclick="sortTable('campaignTable',1,this)">Status <span class="sort-icon">↕</span></th>
+              <th onclick="sortTable('campaignTable',2,this)" class="right">Gasto <span class="sort-icon">↕</span></th>
+              <th onclick="sortTable('campaignTable',3,this)" class="right">Cliques <span class="sort-icon">↕</span></th>
+              <th onclick="sortTable('campaignTable',4,this)" class="right">Impressões <span class="sort-icon">↕</span></th>
+              <th onclick="sortTable('campaignTable',5,this)" class="right">CTR <span class="sort-icon">↕</span></th>
+              <th onclick="sortTable('campaignTable',6,this)" class="right">Conversões <span class="sort-icon">↕</span></th>
+              <th onclick="sortTable('campaignTable',7,this)" class="right">CPC Méd. <span class="sort-icon">↕</span></th>
+            </tr>
+          </thead>
+          <tbody id="campaignBody"></tbody>
+        </table>
+      </div>
+    </div>
+  </section>
+
+  <!-- KEYWORDS TABLE -->
+  <section>
+    <div class="table-card">
+      <div class="table-header">
+        <div class="section-title" style="margin-bottom:16px">
+          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><circle cx="11" cy="11" r="8"/><line x1="21" y1="21" x2="16.65" y2="16.65"/></svg>
+          Top Palavras-Chave <span style="font-size:12px;font-weight:400;color:var(--gray-500);margin-left:6px">ordenadas por investimento</span>
+        </div>
+      </div>
+      <div class="table-wrap">
+        <table id="kwTable">
+          <thead>
+            <tr>
+              <th style="width:40px">#</th>
+              <th onclick="sortTable('kwTable',1,this)">Palavra-Chave <span class="sort-icon">↕</span></th>
+              <th onclick="sortTable('kwTable',2,this)" class="right">Impressões <span class="sort-icon">↕</span></th>
+              <th onclick="sortTable('kwTable',3,this)" class="right">CTR <span class="sort-icon">↕</span></th>
+              <th onclick="sortTable('kwTable',4,this)" class="right">Custo <span class="sort-icon">↕</span></th>
+              <th onclick="sortTable('kwTable',5,this)" class="right">CPC Méd. <span class="sort-icon">↕</span></th>
+              <th onclick="sortTable('kwTable',6,this)">Tipo de Corresp. <span class="sort-icon">↕</span></th>
+            </tr>
+          </thead>
+          <tbody id="kwBody"></tbody>
+        </table>
+      </div>
+    </div>
+  </section>
+
+  <!-- SEARCH TERMS TABLE -->
+  <section>
+    <div class="table-card">
+      <div class="table-header">
+        <div class="section-title" style="margin-bottom:4px">
+          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M21 15a2 2 0 0 1-2 2H7l-4 4V5a2 2 0 0 1 2-2h14a2 2 0 0 1 2 2z"/></svg>
+          Termos de Pesquisa com Cliques
+        </div>
+        <div style="font-size:12px;color:var(--gray-500);padding-bottom:16px">Termos reais que geraram cliques nos anúncios</div>
+      </div>
+      <div class="table-wrap">
+        <table id="stTable">
+          <thead>
+            <tr>
+              <th onclick="sortTable('stTable',0,this)">Termo de Pesquisa <span class="sort-icon">↕</span></th>
+              <th onclick="sortTable('stTable',1,this)" class="right">Cliques <span class="sort-icon">↕</span></th>
+              <th onclick="sortTable('stTable',2,this)" class="right">Impr. <span class="sort-icon">↕</span></th>
+              <th onclick="sortTable('stTable',3,this)" class="right">CTR <span class="sort-icon">↕</span></th>
+              <th onclick="sortTable('stTable',4,this)" class="right">CPC Méd. <span class="sort-icon">↕</span></th>
+              <th onclick="sortTable('stTable',5,this)" class="right">Custo <span class="sort-icon">↕</span></th>
+              <th onclick="sortTable('stTable',6,this)" class="right">Conversões <span class="sort-icon">↕</span></th>
+            </tr>
+          </thead>
+          <tbody id="stBody"></tbody>
+        </table>
+      </div>
+    </div>
+  </section>
+
+</main>
+
+<footer class="footer">
+  Relatório gerado em 15/05/2026 · Google Ads · M1 Dedetizadora · Dados referentes ao período de 05/05/2026 a 15/05/2026
+</footer>
+
+<script>
+// ══════════════════════════════════════
+//  DADOS REAIS DOS CSVs
+// ══════════════════════════════════════
+
+const DATA = {
+  // Série temporal (Gráfico_de_série_temporal)
+  timeSeries: [
+    { date: '05/05', clicks: 0, cost: 0 },
+    { date: '06/05', clicks: 0, cost: 0 },
+    { date: '07/05', clicks: 0, cost: 0 },
+    { date: '08/05', clicks: 0, cost: 0 },
+    { date: '09/05', clicks: 3, cost: 12.28 },
+    { date: '10/05', clicks: 0, cost: 0 },
+    { date: '11/05', clicks: 5, cost: 20.88 },
+    { date: '12/05', clicks: 5, cost: 19.85 },
+    { date: '13/05', clicks: 4, cost: 13.89 },
+    { date: '14/05', clicks: 8, cost: 25.07 },
+    { date: '15/05', clicks: 9, cost: 27.02 },
+  ],
+
+  // Campanhas (Relatório de campanha)
+  campaigns: [
+    {
+      name: '[SEARCH] ESCORPIÃO',
+      status: 'Ativada',
+      statusDetail: 'Aprendizado',
+      cost: 2.87,
+      clicks: 1,
+      impressions: 29,
+      ctr: 3.45,
+      conversions: 1,
+      cpc: 2.87,
+    },
+    {
+      name: '[SEARCH] REGIÃO',
+      status: 'Ativada',
+      statusDetail: 'Aprendizado',
+      cost: 0,
+      clicks: 0,
+      impressions: 2,
+      ctr: 0,
+      conversions: 0,
+      cpc: 0,
+    },
+    {
+      name: '[SEARCH] BARATAS',
+      status: 'Ativada',
+      statusDetail: 'Qualificada',
+      cost: 116.12,
+      clicks: 33,
+      impressions: 488,
+      ctr: 6.76,
+      conversions: 13,
+      cpc: 3.52,
+    },
+  ],
+
+  // Palavras-chave (Palavras-chave) — apenas com custo > 0
+  keywords: [
+    { kw: 'matar baratas',                          type: 'Corresp. de frase', impressions: 140, ctr: 7.14, cost: 39.89, cpc: 3.99 },
+    { kw: 'veneno para barata',                     type: 'Corresp. de frase', impressions: 173, ctr: 5.20, cost: 29.39, cpc: 3.27 },
+    { kw: 'infestação de baratas',                  type: 'Corresp. de frase', impressions:  68, ctr:10.29, cost: 22.83, cpc: 3.26 },
+    { kw: 'veneno para matar barata francesinha',   type: 'Corresp. de frase', impressions:  23, ctr:17.39, cost: 13.50, cpc: 3.38 },
+    { kw: 'baratas pequenas',                       type: 'Corresp. de frase', impressions:  42, ctr: 7.14, cost: 10.51, cpc: 3.50 },
+    { kw: 'matar escorpião',                        type: 'Corresp. de frase', impressions:  27, ctr: 3.70, cost:  2.87, cpc: 2.87 },
+  ],
+
+  // Termos de pesquisa com cliques > 0
+  searchTerms: [
+    { term: 'qual veneno para matar barata francesinha',   clicks: 2, impressions: 2,  ctr: 100.00, cpc: 3.05, cost: 6.10,  conv: 1.00 },
+    { term: 'eliminar baratas definitivamente',            clicks: 2, impressions: 3,  ctr:  66.67, cpc: 3.01, cost: 6.01,  conv: 2.00 },
+    { term: 'baratas pequenas na cozinha como eliminar',   clicks: 1, impressions: 1,  ctr: 100.00, cpc: 4.06, cost: 4.06,  conv: 0 },
+    { term: 'giz mata barata',                            clicks: 1, impressions: 1,  ctr: 100.00, cpc: 4.98, cost: 4.98,  conv: 0 },
+    { term: 'kelldrin mata baratas',                      clicks: 1, impressions: 2,  ctr:  50.00, cpc: 2.98, cost: 2.98,  conv: 0 },
+    { term: 'o que e bom para matar baratinhas pequenas', clicks: 1, impressions: 1,  ctr: 100.00, cpc: 2.98, cost: 2.98,  conv: 1.00 },
+    { term: 'qual o remédio caseiro para matar barata',   clicks: 1, impressions: 1,  ctr: 100.00, cpc: 3.98, cost: 3.98,  conv: 0 },
+    { term: 'remédio caseiro para matar barata francesinha', clicks: 1, impressions: 1, ctr: 100.00, cpc: 4.81, cost: 4.81, conv: 0 },
+    { term: 'remédio para barata pequena',                clicks: 1, impressions: 2,  ctr:  50.00, cpc: 3.47, cost: 3.47,  conv: 0 },
+    { term: 'barata francesinha veneno',                  clicks: 1, impressions: 3,  ctr:  33.33, cpc: 3.46, cost: 3.46,  conv: 0 },
+    { term: 'mata barata',                                clicks: 1, impressions: 3,  ctr:  33.33, cpc: 2.43, cost: 2.43,  conv: 0 },
+    { term: 'remédio para barata',                        clicks: 1, impressions: 2,  ctr:  50.00, cpc: 3.84, cost: 3.84,  conv: 0 },
+    { term: 'como acabar com baratinhas na cozinha',      clicks: 1, impressions: 4,  ctr:  25.00, cpc: 3.40, cost: 3.40,  conv: 1.00 },
+    { term: 'como afastar as baratas de forma natural',   clicks: 1, impressions: 1,  ctr: 100.00, cpc: 3.54, cost: 3.54,  conv: 1.00 },
+    { term: 'como se livrar das baratas em casa',         clicks: 1, impressions: 1,  ctr: 100.00, cpc: 3.34, cost: 3.34,  conv: 0 },
+    { term: 'pega barata funciona',                       clicks: 1, impressions: 1,  ctr: 100.00, cpc: 3.93, cost: 3.93,  conv: 0 },
+  ],
+};
+
+// ══════════════════════════════════════
+//  HELPERS DE FORMATAÇÃO
+// ══════════════════════════════════════
+
+const brl = v => 'R$ ' + v.toFixed(2).replace('.', ',').replace(/\B(?=(\d{3})+(?!\d))/g, '.');
+const pct = v => v.toFixed(2).replace('.', ',') + '%';
+const num = v => v.toLocaleString('pt-BR');
+
+// ══════════════════════════════════════
+//  GRÁFICO DE LINHA
+// ══════════════════════════════════════
+
+(function buildChart() {
+  const ctx = document.getElementById('timeChart').getContext('2d');
+  new Chart(ctx, {
+    data: {
+      labels: DATA.timeSeries.map(d => d.date),
+      datasets: [
+        {
+          type: 'line',
+          label: 'Gasto (R$)',
+          data: DATA.timeSeries.map(d => d.cost),
+          borderColor: '#2563eb',
+          backgroundColor: 'rgba(37,99,235,.08)',
+          borderWidth: 2.5,
+          pointRadius: 4,
+          pointBackgroundColor: '#2563eb',
+          pointBorderColor: '#fff',
+          pointBorderWidth: 2,
+          fill: true,
+          tension: 0.35,
+          yAxisID: 'yCost',
+        },
+        {
+          type: 'line',
+          label: 'Cliques',
+          data: DATA.timeSeries.map(d => d.clicks),
+          borderColor: '#16a34a',
+          backgroundColor: 'rgba(22,163,74,.08)',
+          borderWidth: 2.5,
+          pointRadius: 4,
+          pointBackgroundColor: '#16a34a',
+          pointBorderColor: '#fff',
+          pointBorderWidth: 2,
+          fill: true,
+          tension: 0.35,
+          yAxisID: 'yClicks',
+        },
+      ],
+    },
+    options: {
+      responsive: true,
+      maintainAspectRatio: false,
+      interaction: { mode: 'index', intersect: false },
+      plugins: {
+        legend: { display: false },
+        tooltip: {
+          backgroundColor: '#0f172a',
+          padding: 12,
+          cornerRadius: 8,
+          titleColor: '#94a3b8',
+          bodyColor: '#f1f5f9',
+          bodySpacing: 6,
+          callbacks: {
+            title: items => 'Dia ' + items[0].label + '/2026',
+            label: item => {
+              if (item.dataset.label === 'Gasto (R$)') return '  Gasto: ' + brl(item.raw);
+              return '  Cliques: ' + item.raw;
+            },
+          },
+        },
+      },
+      scales: {
+        x: {
+          grid: { color: 'rgba(0,0,0,.04)' },
+          ticks: { color: '#64748b', font: { size: 12 } },
+        },
+        yCost: {
+          type: 'linear',
+          position: 'left',
+          grid: { color: 'rgba(0,0,0,.04)' },
+          ticks: {
+            color: '#2563eb',
+            font: { size: 11 },
+            callback: v => 'R$ ' + v.toFixed(0),
+          },
+          title: { display: true, text: 'Gasto (R$)', color: '#2563eb', font: { size: 11 } },
+        },
+        yClicks: {
+          type: 'linear',
+          position: 'right',
+          grid: { drawOnChartArea: false },
+          ticks: {
+            color: '#16a34a',
+            font: { size: 11 },
+            stepSize: 1,
+          },
+          title: { display: true, text: 'Cliques', color: '#16a34a', font: { size: 11 } },
+        },
+      },
+    },
+  });
+})();
+
+// ══════════════════════════════════════
+//  TABELA DE CAMPANHAS
+// ══════════════════════════════════════
+
+(function buildCampaigns() {
+  const tbody = document.getElementById('campaignBody');
+  DATA.campaigns.forEach(c => {
+    const isLearning = c.statusDetail === 'Aprendizado';
+    const badgeClass = isLearning ? 'badge-amber' : 'badge-green';
+    const badgeLabel = isLearning ? 'Aprendizado' : 'Qualificada';
+    tbody.insertAdjacentHTML('beforeend', `
+      <tr>
+        <td class="name"><span title="${c.name}">${c.name}</span></td>
+        <td><span class="badge ${badgeClass}">${badgeLabel}</span></td>
+        <td class="right">${brl(c.cost)}</td>
+        <td class="right">${num(c.clicks)}</td>
+        <td class="right">${num(c.impressions)}</td>
+        <td class="right">
+          <div class="bar-wrap">
+            <span>${pct(c.ctr)}</span>
+            <div class="bar-bg"><div class="bar-fill" style="width:${Math.min(c.ctr/20*100,100)}%"></div></div>
+          </div>
+        </td>
+        <td class="right">${num(c.conversions)}</td>
+        <td class="right">${c.cpc > 0 ? brl(c.cpc) : '—'}</td>
+      </tr>
+    `);
+  });
+})();
+
+// ══════════════════════════════════════
+//  TABELA DE PALAVRAS-CHAVE
+// ══════════════════════════════════════
+
+(function buildKeywords() {
+  const tbody = document.getElementById('kwBody');
+  DATA.keywords.forEach((k, i) => {
+    const rank = i === 0 ? 'gold' : i === 1 ? 'silver' : i === 2 ? 'bronze' : '';
+    tbody.insertAdjacentHTML('beforeend', `
+      <tr>
+        <td><span class="rank ${rank}">${i + 1}</span></td>
+        <td class="name"><span title="${k.kw}">${k.kw}</span></td>
+        <td class="right">${num(k.impressions)}</td>
+        <td class="right">
+          <div class="bar-wrap">
+            <span>${pct(k.ctr)}</span>
+            <div class="bar-bg"><div class="bar-fill" style="width:${Math.min(k.ctr/20*100,100)}%"></div></div>
+          </div>
+        </td>
+        <td class="right">${brl(k.cost)}</td>
+        <td class="right">${brl(k.cpc)}</td>
+        <td style="color:var(--gray-500);font-size:12px">${k.type}</td>
+      </tr>
+    `);
+  });
+})();
+
+// ══════════════════════════════════════
+//  TABELA DE TERMOS DE PESQUISA
+// ══════════════════════════════════════
+
+(function buildSearchTerms() {
+  const tbody = document.getElementById('stBody');
+  DATA.searchTerms.forEach(s => {
+    const convBadge = s.conv > 0
+      ? `<span class="badge badge-green">${s.conv % 1 === 0 ? s.conv : s.conv.toFixed(2)}</span>`
+      : '<span style="color:var(--gray-300)">—</span>';
+    tbody.insertAdjacentHTML('beforeend', `
+      <tr>
+        <td class="name" style="max-width:320px"><span title="${s.term}">${s.term}</span></td>
+        <td class="right">${s.clicks}</td>
+        <td class="right">${s.impressions}</td>
+        <td class="right">${pct(s.ctr)}</td>
+        <td class="right">${brl(s.cpc)}</td>
+        <td class="right">${brl(s.cost)}</td>
+        <td class="right">${convBadge}</td>
+      </tr>
+    `);
+  });
+})();
+
+// ══════════════════════════════════════
+//  ORDENAÇÃO DE TABELAS
+// ══════════════════════════════════════
+
+const sortState = {};
+
+function sortTable(tableId, colIndex, thEl) {
+  const table = document.getElementById(tableId);
+  const tbody = table.querySelector('tbody');
+  const rows = Array.from(tbody.querySelectorAll('tr'));
+  const key = tableId + '-' + colIndex;
+
+  // Toggle direction
+  sortState[key] = sortState[key] === 'asc' ? 'desc' : 'asc';
+  const asc = sortState[key] === 'asc';
+
+  // Update header indicators
+  table.querySelectorAll('thead th').forEach(th => th.classList.remove('sorted'));
+  thEl.classList.add('sorted');
+  thEl.querySelector('.sort-icon').textContent = asc ? '↑' : '↓';
+
+  rows.sort((a, b) => {
+    const av = a.cells[colIndex].textContent.trim();
+    const bv = b.cells[colIndex].textContent.trim();
+    const an = parseFloat(av.replace(/[^\d,.-]/g, '').replace(',', '.'));
+    const bn = parseFloat(bv.replace(/[^\d,.-]/g, '').replace(',', '.'));
+    if (!isNaN(an) && !isNaN(bn)) return asc ? an - bn : bn - an;
+    return asc ? av.localeCompare(bv, 'pt-BR') : bv.localeCompare(av, 'pt-BR');
+  });
+
+  rows.forEach(r => tbody.appendChild(r));
+}
+</script>
+</body>
+</html>
