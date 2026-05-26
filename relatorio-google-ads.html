@@ -381,6 +381,17 @@
     .gloss-term { font-size: 11px; font-weight: 700; color: var(--blue); text-transform: uppercase; letter-spacing: .5px; margin-bottom: 6px; }
     .gloss-def { font-size: 13px; color: var(--gray-600); line-height: 1.65; }
 
+    /* ── FATURAMENTO ── */
+    .billing-summary { display: grid; grid-template-columns: repeat(3, 1fr); gap: 16px; padding: 0 24px 24px; }
+    .billing-stat { background: var(--gray-50); border: 1px solid var(--gray-200); border-radius: var(--radius-sm); padding: 18px; }
+    .billing-stat-label { font-size: 11px; font-weight: 600; color: var(--gray-500); text-transform: uppercase; letter-spacing: .4px; }
+    .billing-stat-value { font-size: 24px; font-weight: 800; color: var(--gray-900); margin: 8px 0 4px; line-height: 1; }
+    .billing-stat-sub { font-size: 12px; color: var(--gray-500); }
+    .billing-stat.green .billing-stat-value { color: var(--green); }
+    .billing-stat.blue  .billing-stat-value { color: var(--blue); }
+    .amount-pos { color: var(--green); font-weight: 700; }
+    .amount-neg { color: var(--red);   font-weight: 700; }
+
     /* ── RESPONSIVE EXTRAS ── */
     @media (max-width: 900px) {
       .device-grid { grid-template-columns: 1fr 1fr; }
@@ -826,6 +837,59 @@
     </div>
   </section>
 
+  <!-- ══════════════════ FATURAMENTO ══════════════════ -->
+  <section>
+    <div class="table-card">
+      <div class="table-header">
+        <div class="section-title" style="margin-bottom:6px">
+          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><rect x="1" y="4" width="22" height="16" rx="2" ry="2"/><line x1="1" y1="10" x2="23" y2="10"/></svg>
+          Atividade de Faturamento
+        </div>
+        <div style="font-size:12px;color:var(--gray-500);padding-bottom:20px">Extrato de pagamentos e cobranças do Google Ads · Cartão Mastercard ••••3780</div>
+      </div>
+
+      <!-- Resumo -->
+      <div class="billing-summary">
+        <div class="billing-stat green">
+          <div class="billing-stat-label">Total Investido</div>
+          <div class="billing-stat-value">R$340,00</div>
+          <div class="billing-stat-sub">8 recargas via Mastercard ••••3780</div>
+        </div>
+        <div class="billing-stat blue">
+          <div class="billing-stat-label">Total Gasto em Anúncios</div>
+          <div class="billing-stat-value">R$299,85</div>
+          <div class="billing-stat-sub">Cobrado pelo Google · 05/05–24/05</div>
+        </div>
+        <div class="billing-stat">
+          <div class="billing-stat-label">Saldo após última recarga</div>
+          <div class="billing-stat-value">R$40,20</div>
+          <div class="billing-stat-sub">Recarga de 24/05 · R$40,00 adicionados</div>
+        </div>
+      </div>
+
+      <!-- Extrato -->
+      <div class="table-wrap">
+        <table id="billingTable">
+          <thead>
+            <tr>
+              <th>Data</th>
+              <th>Tipo</th>
+              <th>Campanha / Origem</th>
+              <th class="right">Cliques</th>
+              <th class="right">Movimentação</th>
+              <th class="right">Saldo</th>
+            </tr>
+          </thead>
+          <tbody id="billingBody"></tbody>
+        </table>
+      </div>
+
+      <div class="insight-box" style="margin:0 24px 24px">
+        💡 <strong>Como funciona?</strong> O Google Ads funciona como um <strong>pré-pago</strong>: você adiciona crédito e ele vai sendo descontado conforme as pessoas clicam nos anúncios. Quando o saldo fica próximo de zero, um novo pagamento é feito. Neste período foram realizadas <strong>8 recargas</strong> — 7 de R$40 e 1 de R$60.
+      </div>
+    </div>
+  </section>
+
   <!-- ══════════════════ GLOSSÁRIO DE MÉTRICAS ══════════════════ -->
   <section>
     <div class="chart-card">
@@ -1245,6 +1309,69 @@ const num = v => v.toLocaleString('pt-BR');
         y: { grid: { color: 'rgba(0,0,0,.04)' }, ticks: { color: '#64748b', font: { size: 11 } } },
       },
     },
+  });
+})();
+
+// ══════════════════════════════════════
+//  EXTRATO DE FATURAMENTO
+// ══════════════════════════════════════
+
+(function buildBilling() {
+  const rows = [
+    // { date, type: 'pagamento'|'campanha', desc, clicks, cost, credit, balance }
+    { date: '25/05', type: 'campanha',  desc: '[SEARCH] BARATAS',        clicks:  4, cost: -20.30, credit: 0.00, balance:  0.02 },
+    { date: '25/05', type: 'campanha',  desc: '[SEARCH] REGIÃO',         clicks:  1, cost: -19.88, credit: 0.00, balance: 20.32 },
+    { date: '24/05', type: 'pagamento', desc: 'Mastercard ••••3780',     clicks: null, cost: null, credit: 40.00, balance: 40.20 },
+    { date: '23/05', type: 'campanha',  desc: '[SEARCH] BARATAS',        clicks:  1, cost:  -5.58, credit: 0.00, balance:  0.20 },
+    { date: '22/05', type: 'campanha',  desc: '[SEARCH] BARATAS',        clicks:  6, cost: -31.12, credit: 0.01, balance:  5.78 },
+    { date: '22/05', type: 'campanha',  desc: '[SEARCH] REGIÃO',         clicks:  2, cost: -23.14, credit: 0.00, balance: 36.89 },
+    { date: '21/05', type: 'campanha',  desc: '[SEARCH] BARATAS',        clicks:  5, cost: -23.41, credit: 0.01, balance: 60.03 },
+    { date: '21/05', type: 'pagamento', desc: 'Mastercard ••••3780',     clicks: null, cost: null, credit: 60.00, balance: 83.43 },
+    { date: '20/05', type: 'campanha',  desc: '[SEARCH] BARATAS',        clicks:  2, cost: -16.68, credit: 0.01, balance: 23.43 },
+    { date: '19/05', type: 'campanha',  desc: '[SEARCH] ESCORPIÃO',      clicks:  1, cost:  -4.52, credit: 0.00, balance: 40.10 },
+    { date: '19/05', type: 'campanha',  desc: '[SEARCH] BARATAS',        clicks:  1, cost:  -3.40, credit: 0.00, balance: 44.62 },
+    { date: '19/05', type: 'pagamento', desc: 'Mastercard ••••3780',     clicks: null, cost: null, credit: 40.00, balance: 48.02 },
+    { date: '18/05', type: 'campanha',  desc: '[SEARCH] BARATAS',        clicks:  7, cost: -29.80, credit: 0.00, balance:  8.02 },
+    { date: '18/05', type: 'campanha',  desc: '[SEARCH] ESCORPIÃO',      clicks:  3, cost: -14.93, credit: 0.01, balance: 37.82 },
+    { date: '18/05', type: 'pagamento', desc: 'Mastercard ••••3780',     clicks: null, cost: null, credit: 40.00, balance: 52.74 },
+    { date: '16/05', type: 'campanha',  desc: '[SEARCH] ESCORPIÃO',      clicks:  4, cost: -17.53, credit: 0.00, balance: 12.74 },
+    { date: '16/05', type: 'campanha',  desc: '[SEARCH] BARATAS',        clicks:  3, cost: -10.75, credit: 0.00, balance: 30.27 },
+    { date: '16/05', type: 'pagamento', desc: 'Mastercard ••••3780',     clicks: null, cost: null, credit: 40.00, balance: 41.02 },
+    { date: '15/05', type: 'campanha',  desc: '[SEARCH] BARATAS',        clicks:  8, cost: -24.15, credit: 0.00, balance:  1.02 },
+    { date: '15/05', type: 'campanha',  desc: '[SEARCH] ESCORPIÃO',      clicks:  1, cost:  -2.87, credit: 0.00, balance: 25.17 },
+    { date: '14/05', type: 'campanha',  desc: '[SEARCH] BARATAS',        clicks:  8, cost: -25.07, credit: 0.00, balance: 28.04 },
+    { date: '14/05', type: 'pagamento', desc: 'Mastercard ••••3780',     clicks: null, cost: null, credit: 40.00, balance: 53.11 },
+    { date: '13/05', type: 'campanha',  desc: '[SEARCH] BARATAS',        clicks:  4, cost: -13.89, credit: 0.00, balance: 13.11 },
+    { date: '12/05', type: 'campanha',  desc: '[SEARCH] BARATAS',        clicks:  5, cost: -19.85, credit: 0.00, balance: 27.00 },
+    { date: '11/05', type: 'campanha',  desc: '[SEARCH] BARATAS',        clicks:  5, cost: -20.88, credit: 0.00, balance: 46.85 },
+    { date: '11/05', type: 'pagamento', desc: 'Mastercard ••••3780',     clicks: null, cost: null, credit: 40.00, balance: 67.73 },
+    { date: '09/05', type: 'campanha',  desc: '[SEARCH] BARATAS',        clicks:  3, cost: -12.28, credit: 0.01, balance: 27.73 },
+    { date: '07/05', type: 'pagamento', desc: 'Mastercard ••••3780',     clicks: null, cost: null, credit: 40.00, balance: 40.00 },
+  ];
+
+  const tbody = document.getElementById('billingBody');
+  rows.forEach(r => {
+    const isPay = r.type === 'pagamento';
+    const badge = isPay
+      ? '<span class="badge badge-green">Pagamento</span>'
+      : '<span class="badge" style="background:var(--blue-light);color:var(--blue)">Campanha</span>';
+    const movimentacao = isPay
+      ? `<span class="amount-pos">+ ${brl(r.credit)}</span>`
+      : `<span class="amount-neg">− ${brl(Math.abs(r.cost))}</span>`;
+    const cliques = r.clicks !== null
+      ? `<span style="font-weight:600">${r.clicks}</span>`
+      : '<span style="color:var(--gray-300)">—</span>';
+    const isOutside = r.date === '25/05';
+    tbody.insertAdjacentHTML('beforeend', `
+      <tr style="${isOutside ? 'opacity:.55' : ''}">
+        <td style="font-weight:600;white-space:nowrap">${r.date}/2026${isOutside ? ' <span style="font-size:10px;color:var(--gray-400)">(fora do período)</span>' : ''}</td>
+        <td>${badge}</td>
+        <td class="name" style="max-width:220px"><span title="${r.desc}">${r.desc.replace('[SEARCH][06.05.26]-','')}</span></td>
+        <td class="right">${cliques}</td>
+        <td class="right">${movimentacao}</td>
+        <td class="right" style="font-weight:700">${brl(r.balance)}</td>
+      </tr>
+    `);
   });
 })();
 
