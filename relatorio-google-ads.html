@@ -308,6 +308,90 @@
       margin-top: 8px;
     }
 
+    /* ── TOOLTIP NAS MÉTRICAS ── */
+    .kpi-label { display: flex; align-items: center; gap: 5px; }
+    .kpi-tip {
+      width: 15px; height: 15px; border-radius: 50%;
+      background: var(--gray-100); border: 1px solid var(--gray-200);
+      color: var(--gray-400); font-size: 9px; font-weight: 800; font-style: normal;
+      display: inline-flex; align-items: center; justify-content: center;
+      cursor: help; flex-shrink: 0; position: relative;
+    }
+    .kpi-tip::after {
+      content: attr(data-tip);
+      position: absolute; bottom: calc(100% + 8px); left: 50%;
+      transform: translateX(-50%);
+      background: #0f172a; color: #e2e8f0;
+      font-size: 12px; font-weight: 400; line-height: 1.6;
+      padding: 10px 14px; border-radius: 8px;
+      width: 220px; white-space: normal;
+      opacity: 0; pointer-events: none;
+      transition: opacity .15s; z-index: 300;
+      text-transform: none; letter-spacing: 0;
+    }
+    .kpi-tip:hover::after { opacity: 1; }
+
+    /* ── DISPOSITIVOS ── */
+    .device-grid { display: grid; grid-template-columns: repeat(3, 1fr); gap: 16px; }
+    .device-card {
+      background: var(--white); border-radius: var(--radius);
+      border: 1px solid var(--gray-200); box-shadow: var(--shadow);
+      padding: 20px 22px; display: flex; flex-direction: column; gap: 14px;
+    }
+    .device-header { display: flex; align-items: center; gap: 12px; }
+    .device-icon {
+      width: 40px; height: 40px; border-radius: 10px; flex-shrink: 0;
+      display: flex; align-items: center; justify-content: center;
+    }
+    .device-icon svg { width: 20px; height: 20px; }
+    .device-name { font-size: 15px; font-weight: 700; color: var(--gray-900); }
+    .device-sub { font-size: 12px; color: var(--gray-500); margin-top: 1px; }
+    .device-stats { display: grid; grid-template-columns: 1fr 1fr; gap: 10px; }
+    .d-stat-lbl { font-size: 11px; font-weight: 600; color: var(--gray-500); text-transform: uppercase; letter-spacing: .4px; }
+    .d-stat-val { font-size: 19px; font-weight: 800; color: var(--gray-900); margin-top: 2px; }
+    .device-share { padding-top: 10px; border-top: 1px solid var(--gray-100); font-size: 12px; color: var(--gray-600); }
+    .d-share-bar { height: 6px; background: var(--gray-200); border-radius: 4px; margin-top: 6px; }
+    .d-share-fill { height: 6px; border-radius: 4px; }
+
+    /* ── PÚBLICO / DEMOGRÁFICO ── */
+    .demo-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 20px; }
+    .demo-subtitle { font-size: 12px; color: var(--gray-500); margin-top: 2px; margin-bottom: 18px; }
+    .demo-row { display: flex; align-items: center; gap: 10px; margin-bottom: 10px; }
+    .demo-lbl { width: 70px; font-size: 12px; color: var(--gray-600); flex-shrink: 0; }
+    .demo-bar-wrap { flex: 1; height: 8px; background: var(--gray-100); border-radius: 4px; }
+    .demo-bar { height: 8px; border-radius: 4px; }
+    .demo-pct { width: 44px; text-align: right; font-size: 12px; font-weight: 700; color: var(--gray-700); }
+    .insight-box { font-size: 12px; color: var(--gray-500); margin-top: 14px; line-height: 1.65; padding: 10px 12px; background: var(--gray-50); border-radius: var(--radius-sm); border: 1px solid var(--gray-200); }
+
+    /* ── PONTUAÇÃO DE OTIMIZAÇÃO ── */
+    .score-list { display: flex; flex-direction: column; gap: 18px; }
+    .score-row { display: flex; align-items: center; gap: 14px; }
+    .score-name { flex: 1; font-size: 13px; font-weight: 600; color: var(--gray-900); }
+    .score-bar-bg { flex: 2; height: 10px; background: var(--gray-200); border-radius: 8px; overflow: hidden; }
+    .score-bar-fill { height: 10px; border-radius: 8px; }
+    .score-pct { width: 48px; text-align: right; font-size: 14px; font-weight: 800; }
+
+    /* ── GLOSSÁRIO ── */
+    .glossary-grid { display: grid; grid-template-columns: repeat(3, 1fr); gap: 12px; }
+    .gloss-item {
+      background: var(--white); border: 1px solid var(--gray-200);
+      border-radius: var(--radius-sm); padding: 16px 18px;
+      border-left: 3px solid var(--blue);
+    }
+    .gloss-term { font-size: 11px; font-weight: 700; color: var(--blue); text-transform: uppercase; letter-spacing: .5px; margin-bottom: 6px; }
+    .gloss-def { font-size: 13px; color: var(--gray-600); line-height: 1.65; }
+
+    /* ── RESPONSIVE EXTRAS ── */
+    @media (max-width: 900px) {
+      .device-grid { grid-template-columns: 1fr 1fr; }
+      .demo-grid { grid-template-columns: 1fr; }
+      .glossary-grid { grid-template-columns: 1fr 1fr; }
+    }
+    @media (max-width: 600px) {
+      .device-grid { grid-template-columns: 1fr; }
+      .glossary-grid { grid-template-columns: 1fr; }
+    }
+
     /* ── PRINT ── */
     @media print {
       .btn-export, .header { display: none !important; }
@@ -343,10 +427,10 @@
       </div>
     </div>
     <div class="header-meta">
-      <span class="period-badge">05/05/2026 – 15/05/2026</span>
+      <span class="period-badge">05/05/2026 – 24/05/2026</span>
       <div class="meta-item">
         <span class="meta-label">Última atualização</span>
-        <span class="meta-value">15/05/2026</span>
+        <span class="meta-value">24/05/2026</span>
       </div>
       <button class="btn-export" onclick="window.print()">
         <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><polyline points="6 9 6 2 18 2 18 9"/><path d="M6 18H4a2 2 0 0 1-2-2v-5a2 2 0 0 1 2-2h16a2 2 0 0 1 2 2v5a2 2 0 0 1-2 2h-2"/><rect x="6" y="14" width="12" height="8"/></svg>
@@ -369,68 +453,68 @@
 
       <div class="kpi-card">
         <div class="kpi-header">
-          <span class="kpi-label">Gasto Total</span>
+          <span class="kpi-label">Gasto Total <i class="kpi-tip" data-tip="Valor total investido nos anúncios do Google neste período. O Google só cobra quando alguém clica no anúncio.">?</i></span>
           <span class="kpi-icon green">
             <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><line x1="12" y1="1" x2="12" y2="23"/><path d="M17 5H9.5a3.5 3.5 0 0 0 0 7h5a3.5 3.5 0 0 1 0 7H6"/></svg>
           </span>
         </div>
-        <div class="kpi-value">R$&nbsp;118,99</div>
+        <div class="kpi-value">R$&nbsp;299,85</div>
         <div class="kpi-footer">Orçamento total disponível: <strong>R$ 50,00/dia</strong></div>
       </div>
 
       <div class="kpi-card">
         <div class="kpi-header">
-          <span class="kpi-label">Cliques</span>
+          <span class="kpi-label">Cliques <i class="kpi-tip" data-tip="Quantas vezes alguém clicou no seu anúncio e foi levado para o seu site ou página de contato.">?</i></span>
           <span class="kpi-icon blue">
             <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M5 12h14M12 5l7 7-7 7"/></svg>
           </span>
         </div>
-        <div class="kpi-value">34</div>
-        <div class="kpi-footer">Média de <strong>3,1 cliques/dia</strong> no período</div>
+        <div class="kpi-value">69</div>
+        <div class="kpi-footer">Média de <strong>3,45 cliques/dia</strong> no período</div>
       </div>
 
       <div class="kpi-card">
         <div class="kpi-header">
-          <span class="kpi-label">Impressões</span>
+          <span class="kpi-label">Impressões <i class="kpi-tip" data-tip="Quantas vezes o seu anúncio apareceu na tela de alguém que pesquisou no Google. Não significa que clicaram — só que viram.">?</i></span>
           <span class="kpi-icon blue">
             <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M1 12s4-8 11-8 11 8 11 8-4 8-11 8-11-8-11-8z"/><circle cx="12" cy="12" r="3"/></svg>
           </span>
         </div>
-        <div class="kpi-value">519</div>
-        <div class="kpi-footer">Anúncios exibidos em <strong>11 dias</strong></div>
+        <div class="kpi-value">997</div>
+        <div class="kpi-footer">Anúncios exibidos em <strong>20 dias</strong></div>
       </div>
 
       <div class="kpi-card">
         <div class="kpi-header">
-          <span class="kpi-label">CTR Médio</span>
+          <span class="kpi-label">CTR Médio <i class="kpi-tip" data-tip="De cada 100 pessoas que viram o anúncio, quantas clicaram. Quanto maior esse número, mais relevante seu anúncio é para o público.">?</i></span>
           <span class="kpi-icon amber">
             <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><polyline points="22 12 18 12 15 21 9 3 6 12 2 12"/></svg>
           </span>
         </div>
-        <div class="kpi-value">6,55%</div>
+        <div class="kpi-value">6,92%</div>
         <div class="kpi-footer">Taxa de cliques sobre impressões</div>
       </div>
 
       <div class="kpi-card">
         <div class="kpi-header">
-          <span class="kpi-label">CPC Médio</span>
+          <span class="kpi-label">CPC Médio <i class="kpi-tip" data-tip="Custo por Clique — quanto você pagou em média por cada pessoa que clicou no anúncio. É o preço de trazer um visitante até você.">?</i></span>
           <span class="kpi-icon green">
             <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><rect x="1" y="4" width="22" height="16" rx="2" ry="2"/><line x1="1" y1="10" x2="23" y2="10"/></svg>
           </span>
         </div>
-        <div class="kpi-value">R$&nbsp;3,50</div>
+        <div class="kpi-value">R$&nbsp;4,35</div>
         <div class="kpi-footer">Custo por clique médio no período</div>
       </div>
 
       <div class="kpi-card">
         <div class="kpi-header">
-          <span class="kpi-label">Conversões</span>
+          <span class="kpi-label">Conversões <i class="kpi-tip" data-tip="Ações importantes realizadas após clicar no anúncio — como ligar, preencher um formulário ou acessar uma página de interesse. Indica interesse real no serviço.">?</i></span>
           <span class="kpi-icon green">
             <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><polyline points="20 6 9 17 4 12"/></svg>
           </span>
         </div>
-        <div class="kpi-value">14</div>
-        <div class="kpi-footer">Taxa de conv.: <strong>41,18%</strong> · Custo/conv.: <strong>R$ 8,50</strong></div>
+        <div class="kpi-value">49</div>
+        <div class="kpi-footer">Taxa de conv.: <strong>71,01%</strong> · Custo/conv.: <strong>R$ 6,12</strong></div>
       </div>
 
     </div>
@@ -445,7 +529,7 @@
             <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><polyline points="22 12 18 12 15 21 9 3 6 12 2 12"/></svg>
             Evolução Diária
           </div>
-          <div style="font-size:12px;color:var(--gray-500)">Gasto (R$) e Cliques por dia — 05/05 a 15/05/2026</div>
+          <div style="font-size:12px;color:var(--gray-500)">Gasto (R$) e Cliques por dia — 05/05 a 24/05/2026</div>
         </div>
         <div class="chart-legend">
           <div class="legend-item"><span class="legend-dot" style="background:#2563eb"></span>Gasto (R$)</div>
@@ -544,10 +628,245 @@
     </div>
   </section>
 
+
+  <!-- ══════════════════ DISPOSITIVOS ══════════════════ -->
+  <section>
+    <div class="table-card">
+      <div class="table-header">
+        <div class="section-title" style="margin-bottom:6px">
+          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><rect x="5" y="2" width="14" height="20" rx="2"/><line x1="12" y1="18" x2="12.01" y2="18"/></svg>
+          Dispositivos
+        </div>
+        <div style="font-size:12px;color:var(--gray-500);padding-bottom:20px">Por onde o público acessou os anúncios — celular, computador ou tablet</div>
+      </div>
+      <div style="padding:0 24px 24px">
+        <div class="device-grid">
+
+          <!-- SMARTPHONE -->
+          <div class="device-card">
+            <div class="device-header">
+              <div class="device-icon" style="background:var(--blue-light);color:var(--blue)">
+                <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><rect x="5" y="2" width="14" height="20" rx="2"/><line x1="12" y1="18" x2="12.01" y2="18"/></svg>
+              </div>
+              <div>
+                <div class="device-name">Smartphones</div>
+                <div class="device-sub">Principal canal de acesso</div>
+              </div>
+            </div>
+            <div class="device-stats">
+              <div><div class="d-stat-lbl">Cliques</div><div class="d-stat-val">65</div></div>
+              <div><div class="d-stat-lbl">Gasto</div><div class="d-stat-val">R$279</div></div>
+              <div><div class="d-stat-lbl">Impressões</div><div class="d-stat-val">884</div></div>
+              <div><div class="d-stat-lbl">CPC Méd.</div><div class="d-stat-val">R$4,29</div></div>
+            </div>
+            <div class="device-share">
+              <strong>94,2%</strong> de todos os cliques vieram do celular
+              <div class="d-share-bar"><div class="d-share-fill" style="width:94.2%;background:var(--blue)"></div></div>
+            </div>
+          </div>
+
+          <!-- COMPUTADOR -->
+          <div class="device-card">
+            <div class="device-header">
+              <div class="device-icon" style="background:var(--green-light);color:var(--green)">
+                <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><rect x="2" y="3" width="20" height="14" rx="2"/><line x1="8" y1="21" x2="16" y2="21"/><line x1="12" y1="17" x2="12" y2="21"/></svg>
+              </div>
+              <div>
+                <div class="device-name">Computadores</div>
+                <div class="device-sub">Desktop e notebook</div>
+              </div>
+            </div>
+            <div class="device-stats">
+              <div><div class="d-stat-lbl">Cliques</div><div class="d-stat-val">4</div></div>
+              <div><div class="d-stat-lbl">Gasto</div><div class="d-stat-val">R$20,73</div></div>
+              <div><div class="d-stat-lbl">Impressões</div><div class="d-stat-val">112</div></div>
+              <div><div class="d-stat-lbl">CPC Méd.</div><div class="d-stat-val">R$5,18</div></div>
+            </div>
+            <div class="device-share">
+              <strong>5,8%</strong> de todos os cliques vieram do computador
+              <div class="d-share-bar"><div class="d-share-fill" style="width:5.8%;background:var(--green)"></div></div>
+            </div>
+          </div>
+
+          <!-- TABLET -->
+          <div class="device-card">
+            <div class="device-header">
+              <div class="device-icon" style="background:var(--amber-light);color:var(--amber)">
+                <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><rect x="4" y="2" width="16" height="20" rx="2"/><line x1="12" y1="18" x2="12.01" y2="18"/></svg>
+              </div>
+              <div>
+                <div class="device-name">Tablets</div>
+                <div class="device-sub">Sem cliques no período</div>
+              </div>
+            </div>
+            <div class="device-stats">
+              <div><div class="d-stat-lbl">Cliques</div><div class="d-stat-val">0</div></div>
+              <div><div class="d-stat-lbl">Gasto</div><div class="d-stat-val">R$0,00</div></div>
+              <div><div class="d-stat-lbl">Impressões</div><div class="d-stat-val">1</div></div>
+              <div><div class="d-stat-lbl">CPC Méd.</div><div class="d-stat-val">—</div></div>
+            </div>
+            <div class="device-share">
+              <strong>0%</strong> dos cliques vieram de tablet
+              <div class="d-share-bar"><div class="d-share-fill" style="width:0%;background:var(--amber)"></div></div>
+            </div>
+          </div>
+
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- ══════════════════ PÚBLICO ALCANÇADO ══════════════════ -->
+  <section>
+    <div class="chart-card">
+      <div class="chart-header">
+        <div>
+          <div class="section-title" style="margin-bottom:4px">
+            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M17 21v-2a4 4 0 0 0-4-4H5a4 4 0 0 0-4 4v2"/><circle cx="9" cy="7" r="4"/><path d="M23 21v-2a4 4 0 0 0-3-3.87"/><path d="M16 3.13a4 4 0 0 1 0 7.75"/></svg>
+            Público Alcançado
+          </div>
+          <div style="font-size:12px;color:var(--gray-500)">Perfil de quem viu os anúncios, identificado pelo Google (79% do total de impressões)</div>
+        </div>
+      </div>
+      <div class="demo-grid">
+
+        <!-- GÊNERO -->
+        <div>
+          <div style="font-size:13px;font-weight:600;color:var(--gray-700);margin-bottom:4px">Por Sexo</div>
+          <div class="demo-subtitle">789 impressões com sexo identificado</div>
+          <div class="demo-row">
+            <span class="demo-lbl">Feminino</span>
+            <div class="demo-bar-wrap"><div class="demo-bar" style="width:56.67%;background:#7c3aed"></div></div>
+            <span class="demo-pct">56,67%</span>
+          </div>
+          <div class="demo-row">
+            <span class="demo-lbl">Masculino</span>
+            <div class="demo-bar-wrap"><div class="demo-bar" style="width:43.58%;background:var(--blue)"></div></div>
+            <span class="demo-pct">43,58%</span>
+          </div>
+          <div class="insight-box">
+            💡 <strong>O que isso significa:</strong> Mais mulheres estão vendo seus anúncios. Pode ser útil adaptar o texto do anúncio pensando nesse público principal.
+          </div>
+        </div>
+
+        <!-- FAIXA ETÁRIA -->
+        <div>
+          <div style="font-size:13px;font-weight:600;color:var(--gray-700);margin-bottom:4px">Por Faixa Etária</div>
+          <div class="demo-subtitle">787 impressões com idade identificada</div>
+          <div class="demo-row"><span class="demo-lbl">55–64</span><div class="demo-bar-wrap"><div class="demo-bar" style="width:100%;background:var(--blue)"></div></div><span class="demo-pct">25,79%</span></div>
+          <div class="demo-row"><span class="demo-lbl">45–54</span><div class="demo-bar-wrap"><div class="demo-bar" style="width:89.7%;background:var(--blue)"></div></div><span class="demo-pct">23,13%</span></div>
+          <div class="demo-row"><span class="demo-lbl">35–44</span><div class="demo-bar-wrap"><div class="demo-bar" style="width:83.8%;background:var(--blue)"></div></div><span class="demo-pct">21,60%</span></div>
+          <div class="demo-row"><span class="demo-lbl">25–34</span><div class="demo-bar-wrap"><div class="demo-bar" style="width:52.7%;background:#60a5fa"></div></div><span class="demo-pct">13,60%</span></div>
+          <div class="demo-row"><span class="demo-lbl">+65</span><div class="demo-bar-wrap"><div class="demo-bar" style="width:50.8%;background:#93c5fd"></div></div><span class="demo-pct">13,09%</span></div>
+          <div class="demo-row"><span class="demo-lbl">18–24</span><div class="demo-bar-wrap"><div class="demo-bar" style="width:10.9%;background:#bfdbfe"></div></div><span class="demo-pct">2,80%</span></div>
+          <div class="insight-box">
+            💡 <strong>O que isso significa:</strong> A maioria tem entre 35 e 64 anos — adultos responsáveis pelo lar, com maior chance de contratar um serviço de dedetização.
+          </div>
+        </div>
+
+      </div>
+    </div>
+  </section>
+
+  <!-- ══════════════════ MELHORES DIAS E HORÁRIOS ══════════════════ -->
+  <section>
+    <div class="chart-card">
+      <div class="chart-header">
+        <div>
+          <div class="section-title" style="margin-bottom:4px">
+            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="10"/><polyline points="12 6 12 12 16 14"/></svg>
+            Melhores Dias e Horários
+          </div>
+          <div style="font-size:12px;color:var(--gray-500)">Quando os anúncios receberam mais visualizações — baseado em impressões por dia e hora</div>
+        </div>
+      </div>
+      <div style="display:grid;grid-template-columns:1fr 1fr;gap:24px;margin-top:4px">
+        <div>
+          <div style="font-size:13px;font-weight:600;color:var(--gray-700);margin-bottom:12px">Por Dia da Semana</div>
+          <div class="chart-wrap" style="height:220px"><canvas id="dayChart"></canvas></div>
+        </div>
+        <div>
+          <div style="font-size:13px;font-weight:600;color:var(--gray-700);margin-bottom:12px">Por Hora do Dia</div>
+          <div class="chart-wrap" style="height:220px"><canvas id="hourChart"></canvas></div>
+        </div>
+      </div>
+      <div class="insight-box" style="margin-top:20px">
+        💡 <strong>O que isso significa:</strong> Seus anúncios aparecem mais de <strong>segunda a sexta-feira</strong>, com pico entre <strong>8h e 9h da manhã</strong>. O domingo não gerou nenhuma impressão. Isso pode ajudar a concentrar o orçamento nos dias e horários mais produtivos.
+      </div>
+    </div>
+  </section>
+
+  <!-- ══════════════════ PONTUAÇÃO DE OTIMIZAÇÃO ══════════════════ -->
+  <section>
+    <div class="table-card">
+      <div class="table-header">
+        <div class="section-title" style="margin-bottom:6px">
+          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M12 2l3.09 6.26L22 9.27l-5 4.87 1.18 6.88L12 17.77l-6.18 3.25L7 14.14 2 9.27l6.91-1.01L12 2z"/></svg>
+          Pontuação de Otimização
+        </div>
+        <div style="font-size:12px;color:var(--gray-500);padding-bottom:20px">Avaliação do Google sobre o quanto cada campanha ainda pode melhorar (quanto mais próximo de 100%, melhor configurada)</div>
+      </div>
+      <div style="padding:0 24px 24px">
+        <div class="score-list">
+          <div class="score-row">
+            <span class="score-name">[SEARCH] BARATAS</span>
+            <div class="score-bar-bg"><div class="score-bar-fill" style="width:50.3%;background:#f59e0b"></div></div>
+            <span class="score-pct" style="color:#d97706">50,3%</span>
+          </div>
+          <div class="score-row">
+            <span class="score-name">[SEARCH] ESCORPIÃO</span>
+            <div class="score-bar-bg"><div class="score-bar-fill" style="width:66.7%;background:var(--blue)"></div></div>
+            <span class="score-pct" style="color:var(--blue)">66,7%</span>
+          </div>
+        </div>
+        <div class="insight-box" style="margin-top:18px">
+          💡 <strong>O que é isso?</strong> O Google avalia cada campanha de 0% a 100% e sugere melhorias — como adicionar mais palavras-chave, melhorar os textos dos anúncios ou ajustar lances. A campanha de Baratas está em <strong>50,3%</strong>, indicando bastante espaço para otimização. A de Escorpião está em <strong>66,7%</strong>, já em um nível melhor.
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- ══════════════════ GLOSSÁRIO DE MÉTRICAS ══════════════════ -->
+  <section>
+    <div class="chart-card">
+      <div class="section-title" style="margin-bottom:6px">
+        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M2 3h6a4 4 0 0 1 4 4v14a3 3 0 0 0-3-3H2z"/><path d="M22 3h-6a4 4 0 0 0-4 4v14a3 3 0 0 1 3-3h7z"/></svg>
+        Guia Rápido das Métricas
+      </div>
+      <div style="font-size:12px;color:var(--gray-500);margin-bottom:20px">Entenda o que cada número significa — sem precisar ser especialista em Google Ads</div>
+      <div class="glossary-grid">
+        <div class="gloss-item">
+          <div class="gloss-term">Impressões</div>
+          <div class="gloss-def">Quantas vezes o anúncio apareceu na tela de alguém que pesquisou no Google. <strong>Não significa clique</strong> — apenas que foi exibido.</div>
+        </div>
+        <div class="gloss-item">
+          <div class="gloss-term">Cliques</div>
+          <div class="gloss-def">Quantas vezes alguém <strong>clicou de verdade</strong> no anúncio e foi levado para o seu site ou página de contato.</div>
+        </div>
+        <div class="gloss-item">
+          <div class="gloss-term">CTR — Taxa de Cliques</div>
+          <div class="gloss-def">De cada 100 pessoas que viram o anúncio, quantas clicaram. <strong>Quanto maior, melhor</strong> — indica que o anúncio é relevante.</div>
+        </div>
+        <div class="gloss-item">
+          <div class="gloss-term">CPC — Custo por Clique</div>
+          <div class="gloss-def">Quanto foi pago em média por cada clique. É o preço de trazer <strong>uma pessoa até você</strong>. O Google só cobra por cliques, não por visualizações.</div>
+        </div>
+        <div class="gloss-item">
+          <div class="gloss-term">Conversões</div>
+          <div class="gloss-def">Ações de interesse realizadas após o clique — como ligar, preencher um formulário ou visitar uma página específica. Indica <strong>interesse real</strong> no serviço.</div>
+        </div>
+        <div class="gloss-item">
+          <div class="gloss-term">Pontuação de Otimização</div>
+          <div class="gloss-def">Nota de 0% a 100% que o Google dá à campanha. Quanto maior, mais bem configurada ela está. <strong>Abaixo de 70%</strong> indica melhorias importantes disponíveis.</div>
+        </div>
+      </div>
+    </div>
+  </section>
+
 </main>
 
 <footer class="footer">
-  Relatório gerado em 15/05/2026 · Google Ads · M1 Dedetizadora · Dados referentes ao período de 05/05/2026 a 15/05/2026
+  Relatório gerado em 24/05/2026 · Google Ads · M1 Dedetizadora · Dados referentes ao período de 05/05/2026 a 24/05/2026
 </footer>
 
 <script>
@@ -556,7 +875,7 @@
 // ══════════════════════════════════════
 
 const DATA = {
-  // Série temporal (Gráfico_de_série_temporal)
+  // Série temporal (Série_temporal 2026.05.05-2026.05.24)
   timeSeries: [
     { date: '05/05', clicks: 0, cost: 0 },
     { date: '06/05', clicks: 0, cost: 0 },
@@ -569,73 +888,103 @@ const DATA = {
     { date: '13/05', clicks: 4, cost: 13.89 },
     { date: '14/05', clicks: 8, cost: 25.07 },
     { date: '15/05', clicks: 9, cost: 27.02 },
+    { date: '16/05', clicks: 7, cost: 28.28 },
+    { date: '17/05', clicks: 0, cost: 0 },
+    { date: '18/05', clicks: 10, cost: 44.73 },
+    { date: '19/05', clicks: 2, cost: 7.92 },
+    { date: '20/05', clicks: 2, cost: 16.68 },
+    { date: '21/05', clicks: 5, cost: 23.41 },
+    { date: '22/05', clicks: 8, cost: 54.26 },
+    { date: '23/05', clicks: 1, cost: 5.58 },
+    { date: '24/05', clicks: 0, cost: 0 },
   ],
 
-  // Campanhas (Relatório de campanha)
+  // Campanhas (Campanhas 2026.05.05-2026.05.24)
   campaigns: [
     {
+      name: '[SEARCH] BARATAS',
+      status: 'Ativado',
+      cost: 236.86,
+      clicks: 58,
+      impressions: 868,
+      ctr: 6.68,
+      conversions: null,
+      cpc: 4.08,
+    },
+    {
       name: '[SEARCH] ESCORPIÃO',
-      status: 'Ativada',
-      statusDetail: 'Aprendizado',
-      cost: 2.87,
-      clicks: 1,
-      impressions: 29,
-      ctr: 3.45,
-      conversions: 1,
-      cpc: 2.87,
+      status: 'Ativado',
+      cost: 39.85,
+      clicks: 9,
+      impressions: 100,
+      ctr: 9.00,
+      conversions: null,
+      cpc: 4.43,
     },
     {
       name: '[SEARCH] REGIÃO',
-      status: 'Ativada',
-      statusDetail: 'Aprendizado',
-      cost: 0,
-      clicks: 0,
-      impressions: 2,
-      ctr: 0,
-      conversions: 0,
-      cpc: 0,
-    },
-    {
-      name: '[SEARCH] BARATAS',
-      status: 'Ativada',
-      statusDetail: 'Qualificada',
-      cost: 116.12,
-      clicks: 33,
-      impressions: 488,
-      ctr: 6.76,
-      conversions: 13,
-      cpc: 3.52,
+      status: 'Pausado',
+      cost: 23.14,
+      clicks: 2,
+      impressions: 29,
+      ctr: 6.90,
+      conversions: null,
+      cpc: 11.57,
     },
   ],
 
-  // Palavras-chave (Palavras-chave) — apenas com custo > 0
+  // Palavras-chave (Palavras-chave_de_pesquisa 2026.05.05-2026.05.24) — apenas com custo > 0
   keywords: [
-    { kw: 'matar baratas',                          type: 'Corresp. de frase', impressions: 140, ctr: 7.14, cost: 39.89, cpc: 3.99 },
-    { kw: 'veneno para barata',                     type: 'Corresp. de frase', impressions: 173, ctr: 5.20, cost: 29.39, cpc: 3.27 },
-    { kw: 'infestação de baratas',                  type: 'Corresp. de frase', impressions:  68, ctr:10.29, cost: 22.83, cpc: 3.26 },
-    { kw: 'veneno para matar barata francesinha',   type: 'Corresp. de frase', impressions:  23, ctr:17.39, cost: 13.50, cpc: 3.38 },
-    { kw: 'baratas pequenas',                       type: 'Corresp. de frase', impressions:  42, ctr: 7.14, cost: 10.51, cpc: 3.50 },
-    { kw: 'matar escorpião',                        type: 'Corresp. de frase', impressions:  27, ctr: 3.70, cost:  2.87, cpc: 2.87 },
+    { kw: 'veneno para barata',                     type: 'Corresp. de frase',   impressions: 329, ctr:  6.38, cost: 84.13, cpc: 4.01 },
+    { kw: 'matar baratas',                          type: 'Corresp. de frase',   impressions: 209, ctr:  6.22, cost: 59.74, cpc: 4.60 },
+    { kw: 'matar escorpião',                        type: 'Corresp. de frase',   impressions:  95, ctr:  9.47, cost: 39.85, cpc: 4.43 },
+    { kw: 'infestação de baratas',                  type: 'Corresp. de frase',   impressions: 122, ctr:  8.20, cost: 38.81, cpc: 3.88 },
+    { kw: 'dedetização brasília',                   type: 'Corresp. ampla',      impressions:   9, ctr: 22.22, cost: 23.14, cpc: 11.57 },
+    { kw: 'baratas pequenas',                       type: 'Corresp. de frase',   impressions:  77, ctr:  6.49, cost: 19.65, cpc: 3.93 },
+    { kw: 'veneno para matar barata francesinha',   type: 'Corresp. de frase',   impressions:  38, ctr: 13.16, cost: 16.49, cpc: 3.30 },
+    { kw: 'barata francesinha como eliminar',       type: 'Corresp. de frase',   impressions:   3, ctr: 33.33, cost:  7.16, cpc: 7.16 },
+    { kw: 'infestação de baratas pequenas',         type: 'Corresp. ampla',      impressions:  60, ctr:  3.33, cost:  6.67, cpc: 3.34 },
+    { kw: 'veneno para barata francesinha',         type: 'Corresp. de frase',   impressions:   4, ctr: 25.00, cost:  4.21, cpc: 4.21 },
   ],
 
-  // Termos de pesquisa com cliques > 0
+  // Termos de pesquisa com cliques > 0 (Pesquisas 2026.05.05-2026.05.24)
   searchTerms: [
-    { term: 'qual veneno para matar barata francesinha',   clicks: 2, impressions: 2,  ctr: 100.00, cpc: 3.05, cost: 6.10,  conv: 1.00 },
-    { term: 'eliminar baratas definitivamente',            clicks: 2, impressions: 3,  ctr:  66.67, cpc: 3.01, cost: 6.01,  conv: 2.00 },
-    { term: 'baratas pequenas na cozinha como eliminar',   clicks: 1, impressions: 1,  ctr: 100.00, cpc: 4.06, cost: 4.06,  conv: 0 },
-    { term: 'giz mata barata',                            clicks: 1, impressions: 1,  ctr: 100.00, cpc: 4.98, cost: 4.98,  conv: 0 },
-    { term: 'kelldrin mata baratas',                      clicks: 1, impressions: 2,  ctr:  50.00, cpc: 2.98, cost: 2.98,  conv: 0 },
-    { term: 'o que e bom para matar baratinhas pequenas', clicks: 1, impressions: 1,  ctr: 100.00, cpc: 2.98, cost: 2.98,  conv: 1.00 },
-    { term: 'qual o remédio caseiro para matar barata',   clicks: 1, impressions: 1,  ctr: 100.00, cpc: 3.98, cost: 3.98,  conv: 0 },
-    { term: 'remédio caseiro para matar barata francesinha', clicks: 1, impressions: 1, ctr: 100.00, cpc: 4.81, cost: 4.81, conv: 0 },
-    { term: 'remédio para barata pequena',                clicks: 1, impressions: 2,  ctr:  50.00, cpc: 3.47, cost: 3.47,  conv: 0 },
-    { term: 'barata francesinha veneno',                  clicks: 1, impressions: 3,  ctr:  33.33, cpc: 3.46, cost: 3.46,  conv: 0 },
-    { term: 'mata barata',                                clicks: 1, impressions: 3,  ctr:  33.33, cpc: 2.43, cost: 2.43,  conv: 0 },
-    { term: 'remédio para barata',                        clicks: 1, impressions: 2,  ctr:  50.00, cpc: 3.84, cost: 3.84,  conv: 0 },
-    { term: 'como acabar com baratinhas na cozinha',      clicks: 1, impressions: 4,  ctr:  25.00, cpc: 3.40, cost: 3.40,  conv: 1.00 },
-    { term: 'como afastar as baratas de forma natural',   clicks: 1, impressions: 1,  ctr: 100.00, cpc: 3.54, cost: 3.54,  conv: 1.00 },
-    { term: 'como se livrar das baratas em casa',         clicks: 1, impressions: 1,  ctr: 100.00, cpc: 3.34, cost: 3.34,  conv: 0 },
-    { term: 'pega barata funciona',                       clicks: 1, impressions: 1,  ctr: 100.00, cpc: 3.93, cost: 3.93,  conv: 0 },
+    { term: 'qual veneno para matar barata francesinha',      clicks: 3, impressions:  5, ctr:  60.00, cpc:  3.65, cost: 10.95, conv: 0 },
+    { term: 'eliminar baratas definitivamente',               clicks: 2, impressions:  4, ctr:  50.00, cpc:  3.01, cost:  6.01, conv: 0 },
+    { term: 'existe veneno para escorpião',                   clicks: 2, impressions:  5, ctr:  40.00, cpc:  4.33, cost:  8.65, conv: 0 },
+    { term: 'maxforce prime profissional',                    clicks: 2, impressions:  7, ctr:  28.57, cpc:  6.89, cost: 13.78, conv: 0 },
+    { term: 'pega barata funciona',                           clicks: 2, impressions:  6, ctr:  33.33, cpc:  4.24, cost:  8.48, conv: 0 },
+    { term: 'remedio para matar escorpião',                   clicks: 2, impressions:  1, ctr: 100.00, cpc:  4.97, cost:  9.93, conv: 0 },
+    { term: 'barata como eliminar',                           clicks: 1, impressions:  1, ctr: 100.00, cpc: 11.26, cost: 11.26, conv: 0 },
+    { term: 'barata francesinha como eliminar',               clicks: 1, impressions:  2, ctr:  50.00, cpc:  7.16, cost:  7.16, conv: 0 },
+    { term: 'barata francesinha veneno',                      clicks: 1, impressions:  3, ctr:  33.33, cpc:  3.46, cost:  3.46, conv: 0 },
+    { term: 'baratas pequenas na cozinha como eliminar',      clicks: 1, impressions:  1, ctr: 100.00, cpc:  4.06, cost:  4.06, conv: 0 },
+    { term: 'caltrin barata',                                 clicks: 1, impressions:  3, ctr:  33.33, cpc:  3.31, cost:  3.31, conv: 0 },
+    { term: 'como acabar com baratas em apartamento',         clicks: 1, impressions:  1, ctr: 100.00, cpc:  7.90, cost:  7.90, conv: 0 },
+    { term: 'como acabar com baratinhas na cozinha',          clicks: 1, impressions:  6, ctr:  16.67, cpc:  3.40, cost:  3.40, conv: 0 },
+    { term: 'como afastar as baratas de forma natural',       clicks: 1, impressions:  1, ctr: 100.00, cpc:  3.54, cost:  3.54, conv: 0 },
+    { term: 'como eliminar baratas definitivamente',          clicks: 1, impressions:  1, ctr: 100.00, cpc:  3.42, cost:  3.42, conv: 0 },
+    { term: 'como se livrar das baratas em casa',             clicks: 1, impressions:  1, ctr: 100.00, cpc:  3.34, cost:  3.34, conv: 0 },
+    { term: 'dedetização ceilândia',                          clicks: 1, impressions:  1, ctr: 100.00, cpc: 17.28, cost: 17.28, conv: 0 },
+    { term: 'giz mata barata',                                clicks: 1, impressions:  1, ctr: 100.00, cpc:  4.98, cost:  4.98, conv: 0 },
+    { term: 'inseticida para baratas',                        clicks: 1, impressions:  2, ctr:  50.00, cpc:  7.59, cost:  7.59, conv: 0 },
+    { term: 'kelldrin mata baratas',                          clicks: 1, impressions:  2, ctr:  50.00, cpc:  2.98, cost:  2.98, conv: 0 },
+    { term: 'massa para matar baratas',                       clicks: 1, impressions:  1, ctr: 100.00, cpc:  3.60, cost:  3.60, conv: 0 },
+    { term: 'mata barata',                                    clicks: 1, impressions:  4, ctr:  25.00, cpc:  2.43, cost:  2.43, conv: 0 },
+    { term: 'matar barata caseiro',                           clicks: 1, impressions:  1, ctr: 100.00, cpc:  4.99, cost:  4.99, conv: 0 },
+    { term: 'melhor veneno para baratas pequenas de armário', clicks: 1, impressions:  2, ctr:  50.00, cpc:  3.62, cost:  3.62, conv: 0 },
+    { term: 'o que e bom para matar baratinhas pequenas',     clicks: 1, impressions:  1, ctr: 100.00, cpc:  2.98, cost:  2.98, conv: 0 },
+    { term: 'produto para matar escorpião',                   clicks: 1, impressions:  1, ctr: 100.00, cpc:  2.87, cost:  2.87, conv: 0 },
+    { term: 'qual o remédio caseiro para matar barata',       clicks: 1, impressions:  1, ctr: 100.00, cpc:  3.98, cost:  3.98, conv: 0 },
+    { term: 'remédio bom para matar barata',                  clicks: 1, impressions:  1, ctr: 100.00, cpc:  3.40, cost:  3.40, conv: 0 },
+    { term: 'remédio caseiro para matar barata francesinha',  clicks: 1, impressions:  1, ctr: 100.00, cpc:  4.81, cost:  4.81, conv: 0 },
+    { term: 'remédio para barata',                            clicks: 1, impressions:  6, ctr:  16.67, cpc:  3.84, cost:  3.84, conv: 0 },
+    { term: 'remédio para barata pequena',                    clicks: 1, impressions:  4, ctr:  25.00, cpc:  3.47, cost:  3.47, conv: 0 },
+    { term: 'remédio para barata poderoso',                   clicks: 1, impressions:  1, ctr: 100.00, cpc:  4.89, cost:  4.89, conv: 0 },
+    { term: 'veneno para barata francesinha',                 clicks: 1, impressions:  3, ctr:  33.33, cpc:  4.21, cost:  4.21, conv: 0 },
+    { term: 'veneno para matar barata francesinha',           clicks: 1, impressions: 12, ctr:   8.33, cpc:  2.99, cost:  2.99, conv: 0 },
+    { term: 'veneno para matar baratas pequenas',             clicks: 1, impressions:  2, ctr:  50.00, cpc:  2.75, cost:  2.75, conv: 0 },
+    { term: 'veneno para matar baratinha pequena',            clicks: 1, impressions:  1, ctr: 100.00, cpc:  2.65, cost:  2.65, conv: 0 },
   ],
 };
 
@@ -750,9 +1099,8 @@ const num = v => v.toLocaleString('pt-BR');
 (function buildCampaigns() {
   const tbody = document.getElementById('campaignBody');
   DATA.campaigns.forEach(c => {
-    const isLearning = c.statusDetail === 'Aprendizado';
-    const badgeClass = isLearning ? 'badge-amber' : 'badge-green';
-    const badgeLabel = isLearning ? 'Aprendizado' : 'Qualificada';
+    const badgeClass = c.status === 'Pausado' ? 'badge-red' : 'badge-green';
+    const badgeLabel = c.status === 'Pausado' ? 'Pausada' : 'Ativa';
     tbody.insertAdjacentHTML('beforeend', `
       <tr>
         <td class="name"><span title="${c.name}">${c.name}</span></td>
@@ -766,7 +1114,7 @@ const num = v => v.toLocaleString('pt-BR');
             <div class="bar-bg"><div class="bar-fill" style="width:${Math.min(c.ctr/20*100,100)}%"></div></div>
           </div>
         </td>
-        <td class="right">${num(c.conversions)}</td>
+        <td class="right">${c.conversions !== null ? num(c.conversions) : '—'}</td>
         <td class="right">${c.cpc > 0 ? brl(c.cpc) : '—'}</td>
       </tr>
     `);
@@ -821,6 +1169,82 @@ const num = v => v.toLocaleString('pt-BR');
         <td class="right">${convBadge}</td>
       </tr>
     `);
+  });
+})();
+
+// ══════════════════════════════════════
+//  GRÁFICO POR DIA DA SEMANA
+// ══════════════════════════════════════
+
+(function buildDayChart() {
+  const ctx = document.getElementById('dayChart').getContext('2d');
+  const labels = ['Dom', 'Seg', 'Ter', 'Qua', 'Qui', 'Sex', 'Sáb'];
+  const data   = [0, 219, 134, 149, 187, 212, 96];
+  new Chart(ctx, {
+    type: 'bar',
+    data: {
+      labels,
+      datasets: [{
+        label: 'Impressões',
+        data,
+        backgroundColor: data.map((v, i) =>
+          i === 1 ? '#2563eb' : i === 5 ? '#3b82f6' : 'rgba(37,99,235,.22)'),
+        borderRadius: 6,
+        borderSkipped: false,
+      }],
+    },
+    options: {
+      responsive: true, maintainAspectRatio: false,
+      plugins: {
+        legend: { display: false },
+        tooltip: {
+          backgroundColor: '#0f172a', padding: 10, cornerRadius: 8,
+          callbacks: { label: item => '  ' + item.raw + ' impressões' },
+        },
+      },
+      scales: {
+        x: { grid: { display: false }, ticks: { color: '#64748b', font: { size: 11 } } },
+        y: { grid: { color: 'rgba(0,0,0,.04)' }, ticks: { color: '#64748b', font: { size: 11 } } },
+      },
+    },
+  });
+})();
+
+// ══════════════════════════════════════
+//  GRÁFICO POR HORA DO DIA
+// ══════════════════════════════════════
+
+(function buildHourChart() {
+  const ctx = document.getElementById('hourChart').getContext('2d');
+  const labels = ['8h','9h','10h','11h','12h','13h','14h','15h','16h','17h','18h','19h','20h','21h','22h','23h'];
+  const data   = [105, 107, 68, 94, 70, 74, 98, 88, 86, 93, 19, 16, 6, 25, 30, 18];
+  new Chart(ctx, {
+    type: 'bar',
+    data: {
+      labels,
+      datasets: [{
+        label: 'Impressões',
+        data,
+        backgroundColor: data.map((v, i) =>
+          i <= 1 ? '#2563eb' : 'rgba(37,99,235,.22)'),
+        borderRadius: 4,
+        borderSkipped: false,
+      }],
+    },
+    options: {
+      responsive: true, maintainAspectRatio: false,
+      plugins: {
+        legend: { display: false },
+        tooltip: {
+          backgroundColor: '#0f172a', padding: 10, cornerRadius: 8,
+          callbacks: { label: item => '  ' + item.raw + ' impressões' },
+        },
+      },
+      scales: {
+        x: { grid: { display: false }, ticks: { color: '#64748b', font: { size: 10 } } },
+        y: { grid: { color: 'rgba(0,0,0,.04)' }, ticks: { color: '#64748b', font: { size: 11 } } },
+      },
+    },
   });
 })();
 

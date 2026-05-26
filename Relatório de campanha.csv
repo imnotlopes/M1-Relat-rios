@@ -1,0 +1,9 @@
+Relatório de campanha
+5 de maio de 2026 - 15 de maio de 2026
+Status da campanha,Campanha,Orçamento,Nome do orçamento,Tipo de orçamento,Código da moeda,Status,Motivos do status,Pontuação de otimização,Tipo de campanha,Impr.,CTR,Custo,Tipo de estratégia de lances,Cliques,Taxa de conv.,Conversões,CPC méd.,Custo / conv.
+Ativada,[SEARCH][06.05.26]-ESCORPIÃO,"15,00", --,Diário,BRL,Qualificado (aprendizado),estratégia de lances com aprendizado em andamento,"89,61",Pesquisa,29,"3,45%","2,87",Maximizar cliques,1,"100,00%","1,00","2,87","2,87"
+Ativada,[SEARCH][06.05.26]-REGIÃO,"10,00", --,Diário,BRL,Qualificado (aprendizado),estratégia de lances com aprendizado em andamento,"88,05",Pesquisa,2,"0,00%","0,00",Maximizar as conversões,0,"0,00%","0,00",0,"0,00"
+Ativada,[SEARCH][06.05.26]-BARATAS,"25,00", --,Diário,BRL,Qualificado,,"79,22",Pesquisa,488,"6,76%","116,12",Maximizar cliques,33,"39,39%","13,00","3,52","8,93"
+Total: Campanhas, --, --, --, --,BRL, --,, --, --,519,"6,55%","118,99", --,34,"41,18%","14,00","3,50","8,50"
+Total: Conta,,,,,BRL,,,,,519,"6,55%","118,99",,34,"41,18%","14,00","3,50","8,50"
+Total: Pesquisa,,,,,BRL,,,,Pesquisa,519,"6,55%","118,99",,34,"41,18%","14,00","3,50","8,50"
